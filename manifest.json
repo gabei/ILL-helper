@@ -3,15 +3,26 @@
   "name": "Borderify",
   "version": "1.0",
 
-  "description": "Adds a red border to all webpages matching mozilla.org.",
+  "description": "An extension to collect the list of possible lenders, compare them to what we know is available, and return the list in a copy-able format.",
+  "homepage_url": "https://github.com/gabei/ILL-helper",
 
   "icons": {
     "48": "icons/robot.png"
   },
 
+  "permissions": ["activeTab"],
+
+  "browser_action": {
+    "default_icon": "icons/robot.png",
+    "default_title": "Ill Helper",
+    "default_popup": "popup/ill-helper-ui.html"
+  },
+
+   "web_accessible_resources": [],
+
   "content_scripts": [
     {
-      "matches": ["*://*.mozilla.org/*"],
+      "matches": ["*://*.worldcat.org/*"],
       "js": ["borderify.js"]
     }
   ]
