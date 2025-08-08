@@ -1,3 +1,5 @@
+
+
 {
   "manifest_version": 2,
   "name": "Borderify",
@@ -23,7 +25,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.worldcat.org/*"],
-      "js": ["borderify.js"]
+      "js": ["ill-helper.js"]
     }
   ]
 }
