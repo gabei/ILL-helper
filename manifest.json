@@ -17,7 +17,7 @@
   "browser_action": {
     "default_icon": "icons/robot.png",
     "default_title": "Ill Helper",
-    "default_popup": "popup/ill-helper-ui.html"
+    "default_popup": "popup/helper-ui.html"
   },
 
    "web_accessible_resources": [],
