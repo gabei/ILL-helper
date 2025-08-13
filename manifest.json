@@ -2,7 +2,7 @@
 
 {
   "manifest_version": 2,
-  "name": "Borderify",
+  "name": "ILL-Helper",
   "version": "1.0",
 
   "description": "An extension to collect the list of possible lenders, compare them to what we know is available, and return the list in a copy-able format.",
@@ -12,7 +12,7 @@
     "48": "icons/robot.png"
   },
 
-  "permissions": ["activeTab"],
+  "permissions": ["activeTab", "storage", "scripting"],
 
   "browser_action": {
     "default_icon": "icons/robot.png",
