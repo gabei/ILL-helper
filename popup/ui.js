@@ -18,13 +18,11 @@ function handleError(error) {
 }
 
 function notifyBackgroundPage(e) {
-  const sending = browser.sendMessage({
+  const sending = browser.runtime.sendMessage({
     command: "search",
   });
   sending.then(handleResponse, handleError);
 }
-
-
 
 /**
  * There was an error executing the script.

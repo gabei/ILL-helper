@@ -3,6 +3,7 @@ async function getListOfLibraryNames(){
     let names = document.querySelectorAll('li[data-testid*="library-card"]');
     console.log("Library Names: ", names)
     return Array.from(names).map((name) => name.innerText);
+}
 
 async function handleMessage(request, sender, sendResponse){
   console.log(`A content script sent a message: ${request.greeting}`);
