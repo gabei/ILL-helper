@@ -8,30 +8,29 @@
     return;
   }
   window.hasRun = true;
-
   
-  const searchButton = document.querySelector("#search-button");
-  searchButton.addEventListener("click", ()=> {
-      alert("earch clicked!");
-  })
-
   async function getListOfLibraryNames(){
     // This function will return a list of library names from the holdings list
-    let names = document.querySelectorAll('ul[data-testid="holding-list-details"] li strong');
+    let names = document.querySelectorAll('li[data-testid*="library-card"]');
+    console.log(names)
     return Array.from(names).map((name) => name.innerText);
 }
+  function clearList(){
 
-
+  }
 
   /**
    * Listen for messages from the background script.
    * Call "insertBeast()" or "removeExistingBeasts()".
    */
-  browser.runtime.onMessage.addListener((message) => {
+  browser.runtime.onMessage.addListener(async (message) => {
     if (message.command === "beastify") {
-      insertBeast(message.beastURL);
+      let list = await getListOfLibraryNames();
+      browser.runtime.sendMessage({
+        data: list
+      })
     } else if (message.command === "reset") {
-      removeExistingBeasts();
+      clearList();
     }
   });
 })();

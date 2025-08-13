@@ -2,18 +2,21 @@
 <html lang="en-US">
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="helper-ui.css" />
+    <link rel="stylesheet" href="ui.css" />
   </head>
 
   <body>
     <div id="popup-content">
-      <button id="search-button">Search for Lenders</button>
+      <button type ="search" id="search-button">Search for Lenders</button>
       <button type="reset">Reset</button>
+    <div id="search-results">
+        <ul id="search-results__list"></ul>
+    </div>
     </div>
     <div id="error-content" class="hidden">
       <p>Can't search this page.</p>
       <p>Try a different page.</p>
     </div>
-    <script src="search-lenders.js"></script>
+    <script src="ui.js"></script>
   </body>
 </html>
