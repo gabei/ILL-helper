@@ -1,9 +1,6 @@
 // working from here: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Your_second_WebExtension
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/sendMessage
 
-
-
-
 function main(){
   console.log("Script injected! Running main()");
 
@@ -15,26 +12,19 @@ function main(){
       notifyBackgroundPage();
   })
 
-  async function handleResponse(message) {
-    let response = await message.response;
-    console.log(`Message from the background script: ${response}`);
-  }
-
-  function handleError(error) {
-    console.log(`Error: ${error}`);
+  function search(tabs){
+    browser.tabs.sendMessage(tabs[0].id, {
+      command: "search",
+    })
+    .then((response) => {
+      console.log(response.list);
+    });
   }
 
   function notifyBackgroundPage(e) {
-    function search(tabs){
-      browser.tabs.sendMessage(tabs[0].id, {
-          command: "search",
-        });
-    }
-
     browser.tabs
         .query({ active: true, currentWindow: true })
         .then(search)
-        .then(handleResponse, handleError)
         .catch(reportError);
   }
 

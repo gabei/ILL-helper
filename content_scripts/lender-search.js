@@ -17,7 +17,7 @@
     let list = await getListOfLibraryNames();
     if(list.length === 0) list = [];
     console.log(list)
-    return Promise.resolve({ response: list });
+    return Promise.resolve({ list: list });
   };
 
   browser.runtime.onMessage.addListener(handleMessage);
