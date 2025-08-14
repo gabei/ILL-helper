@@ -15,8 +15,9 @@ function main(){
       notifyBackgroundPage();
   })
 
-  function handleResponse(message) {
-    console.log(`Message from the background script: ${message.response}`);
+  async function handleResponse(message) {
+    let response = await message.response;
+    console.log(`Message from the background script: ${response}`);
   }
 
   function handleError(error) {
@@ -24,10 +25,17 @@ function main(){
   }
 
   function notifyBackgroundPage(e) {
-    const sending = browser.runtime.sendMessage({
-      command: "search",
-    });
-    sending.then(handleResponse, handleError);
+    function search(tabs){
+      browser.tabs.sendMessage(tabs[0].id, {
+          command: "search",
+        });
+    }
+
+    browser.tabs
+        .query({ active: true, currentWindow: true })
+        .then(search)
+        .then(handleResponse, handleError)
+        .catch(reportError);
   }
 
 }
