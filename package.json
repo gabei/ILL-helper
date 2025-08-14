@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/gabei/ILL-helper/issues"
   },
-  "homepage": "https://github.com/gabei/ILL-helper#readme"
+  "homepage": "https://github.com/gabei/ILL-helper#readme",
+  "dependencies": {
+    "web-ext": "^8.9.0"
+  }
 }
