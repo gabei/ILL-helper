@@ -1,0 +1,22 @@
+{
+  "name": "ill-helper",
+  "version": "1.0.0",
+  "description": "An extension to assit with extending ILL capabilities. A neatly packaged version of the ILL-extended bot.",
+  "main": "ill-helper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabei/ILL-helper.git"
+  },
+  "author": "Gabe Garcia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabei/ILL-helper/issues"
+  },
+  "homepage": "https://github.com/gabei/ILL-helper#readme",
+  "dependencies": {
+    "rollup": "^4.46.2"
+  }
+}
