@@ -1,3 +1,5 @@
+import initFuzzySearch from '../search/fuzzySearch.js';
+
 (() => {
   console.log("Hello from the content script!");
 
@@ -14,10 +16,11 @@
 
   async function handleMessage(request, sender, sendResponse){
     console.log(`A content script sent a message: ${request.command}`);
-    let list = await getListOfLibraryNames();
-    if(list.length === 0) list = [];
-    console.log(list)
-    return Promise.resolve({ list: list });
+    let libraryNames = await getListOfLibraryNames();
+    let lenderList = await initFuzzySearch(libraryNames);
+    if(lenderList.length === 0) lenderList = [];
+    console.log(lenderList)
+    return Promise.resolve({ list: lenderList });
   };
 
   browser.runtime.onMessage.addListener(handleMessage);
