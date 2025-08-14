@@ -20,12 +20,12 @@
     "default_popup": "popup/ui.html"
   },
 
-   "web_accessible_resources": [],
+   "web_accessible_resources": []
 
-  "content_scripts": [
-    {
-      "matches": ["*://*.worldcat.org/*"],
-      "js": ["ill-helper.js"]
-    }
-  ]
+  // "content_scripts": [
+  //   {
+  //     "matches": ["*://*.worldcat.org/*"],
+  //     "js": ["content_scripts/lender-search.js"]
+  //   }
+  // ]
 }
