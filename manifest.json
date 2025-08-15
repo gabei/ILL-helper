@@ -23,7 +23,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.worldcat.org/*"],
-      "js": ["dist/main.js"]
+      "js": ["content_scripts/lender-search.js"]
     }
   ]
 }
