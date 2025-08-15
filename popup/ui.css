@@ -1,6 +1,9 @@
 html,
 body {
-  width: 100px;
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hidden {
@@ -28,4 +31,8 @@ button[type="reset"] {
 
 button[type="reset"]:hover {
   background-color: #eaea9d;
+}
+
+.search-results__list {
+  list-style-type: none;
 }

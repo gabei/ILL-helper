@@ -8,6 +8,15 @@ function main(){
   const searchResults = document.querySelector("#search-results__list")
   const lenderList = [];
 
+  function populateList(lenderData) {
+    for(const item of lenderData){
+      searchResults.append(
+        document.createElement("li")
+        .innerText = item
+      )
+    }
+  }
+
   searchButton.addEventListener("click", async ()=> {
       notifyBackgroundPage();
   })
@@ -18,6 +27,7 @@ function main(){
     })
     .then((response) => {
       console.log(response.list);
+      populateList(response.list);
     });
   }
 
