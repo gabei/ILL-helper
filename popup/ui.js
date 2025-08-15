@@ -4,21 +4,23 @@
 function main(){
   console.log("Script injected! Running main()");
 
-  const searchButton = document.querySelector("#search-button")
-  const searchResults = document.querySelector("#search-results__list")
-  const lenderList = [];
+  let searchButton = document.querySelector("#search-button");
+  let clearButton = document.querySelector("#clear-button");
+  let searchResults = document.querySelector("#search-results");
+  let lenderList = document.querySelector("#search-results__list");
+  let loading = document.querySelector("#loading");
 
-  function populateList(lenderData) {
-    for(const item of lenderData){
-      searchResults.append(
-        document.createElement("li")
-        .innerText = item
-      )
-    }
-  }
+  let hasRun = false;
 
   searchButton.addEventListener("click", async ()=> {
-      notifyBackgroundPage();
+    hideSearchResults();
+    showLoadingDiv();
+    notifyBackgroundPage();
+    searchButton.disabled = true;
+  })
+
+  clearButton.addEventListener("click", async ()=> {
+      reset();
   })
 
   function search(tabs){
@@ -38,7 +40,48 @@ function main(){
         .catch(reportError);
   }
 
+  function populateList(lenderData) {
+    showSearchResults();
+    hideLoadingDiv();
+
+    for(const item of lenderData){
+      let li = document.createElement("li");
+      li.innerText = item;
+      lenderList.append(li)
+    }
+  }
+
+  function showSearchResults(){
+    searchResults.classList.remove("hidden");
+    hasRun = true;
+  }
+
+  function hideSearchResults(){
+    searchResults.classList.add("hidden");
+  }
+
+  function showLoadingDiv() {
+    loading.classList.remove("hidden");
+    loading.classList.add("flex");
+  }
+
+  function hideLoadingDiv() {
+    loading.classList.remove("flex");
+    loading.classList.add("hidden");
+  }
+
+  function reset() {
+    window.location.reload(true);
+    hasRun = false;
+    searchButton.disabled = false
+    searchResults.innerHTML = "";
+  }
 }
+
+
+
+
+
 /**
  * There was an error executing the script.
  * Display the popup's error message, and hide the normal UI.

@@ -6,7 +6,8 @@
   "main": "ill-helper.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "zip": "cd ../ && tar.exe acvf ILL-Helper.zip ILL-helper"
   },
   "repository": {
     "type": "git",
