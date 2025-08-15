@@ -1,4 +1,4 @@
-import '../fuse/fuse.js';
+import Fuse from 'fuse.js'
 import TXlenders from "./TXlenders.json" with {type: 'json'};
 import ALLlenders from "./ALLlenders.json" with {type: 'json'};
 
@@ -88,7 +88,8 @@ function removeDuplicateEntries(list1, list2){
 // }
 
 
-async function fuzzySearch(libraryNames, lenderDict){
+async function fuzzySearch(libraries, lenderDict){
+  console.log("fuzzySearch()");
 
   const validMatches = new Array();
   const lenders = libraryNameList(lenderDict);
@@ -110,15 +111,18 @@ async function fuzzySearch(libraryNames, lenderDict){
     // ignoreFieldNorm: false,
     // fieldNormWeight: 1,
     keys: [
-      "LIBRARY NAME"
+      "LIBRARY NAME",
+      "AGEXTERNAL CODE"
     ]
   };
 
 
   for(let library of libraries) {
+    console.log(library);
     let fuse = new Fuse(lenders, fuseOptions);
     let searchPattern = library;
-    console.log(fuse.search(searchPattern))
+    let result = fuse.search(searchPattern)
+    console.log(result);
     validMatches.push(searchPattern);
   }
 
