@@ -1,10 +1,21 @@
-html,
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+
 body {
-  width: 100px;
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
 }
 
 .hidden {
   display: none;
+}
+
+.flex {
+  display: flex
 }
 
 button {
@@ -28,4 +39,37 @@ button[type="reset"] {
 
 button[type="reset"]:hover {
   background-color: #eaea9d;
+}
+
+#search-results__list {
+  list-style-type: none;
+}
+
+#loading {
+  justify-content: center;
+  align-items: center;
+}
+
+#loading p {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.loading-icon {
+  width: 20px;
+  animation-name: spin;
+  animation-timing-function: linear;
+  animation-duration: 5s;
+  animation-fill-mode: forwards;
+  display: inline-block;
+}
+
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }
