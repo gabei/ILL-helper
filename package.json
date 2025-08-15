@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/gabei/ILL-helper#readme",
   "dependencies": {
-    "fuse.js": "^7.1.0",
+    "fuzzball": "^2.2.3",
     "web-ext": "^8.9.0"
   },
   "devDependencies": {

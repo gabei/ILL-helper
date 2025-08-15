@@ -1,4 +1,4 @@
-import Fuse from 'fuse.js'
+import { extract, ratio } from 'fuzzball';
 import TXlenders from "./TXlenders.json" with {type: 'json'};
 import ALLlenders from "./ALLlenders.json" with {type: 'json'};
 
@@ -20,9 +20,9 @@ import ALLlenders from "./ALLlenders.json" with {type: 'json'};
     console.log("Received message. Searching...");
 
     let libraryNames = await getListOfLibraryNames();
-    let lenderList = await fuzzySearch(libraryNames, ALLlenders);
+    let lenderList = await searchCombindLenderList(libraryNames);
+    console.log(lenderList);
     if(lenderList.length === 0) lenderList = [];
-    console.log(lenderList)
     return Promise.resolve({ list: lenderList });
   };
 
@@ -77,57 +77,39 @@ function removeDuplicateEntries(list1, list2){
 }
 
 
-// export default async function initFuzzysearch(searchableLibraries){
-//   let texasLenderList = createLenderCodeDict(TXlenders);
-//   let allLenderList = createLenderCodeDict(ALLlenders);
 
-//   let txMatches = runNameMatchSearch(normalizeLibraryNames(searchableLibraries), texasLenderList);
-//   let allMatches = runNameMatchSearch(normalizeLibraryNames(searchableLibraries), allLenderList);
-
-//   return removeDuplicateEntries(txMatches, allMatches)
-// }
-
-
-async function fuzzySearch(libraries, lenderDict){
-  console.log("fuzzySearch()");
-
+function runNameMatchSearch(libraries, lenderDict){
+  console.log("Running name match search...");;
   const validMatches = new Array();
   const lenders = libraryNameList(lenderDict);
-
-
-  const fuseOptions = {
-    isCaseSensitive: false,
-    // includeScore: false,
-    // ignoreDiacritics: false,
-    // shouldSort: true,
-    // includeMatches: false,
-    // findAllMatches: false,
-    // minMatchCharLength: 1,
-    // location: 0,
-    // threshold: 0.6,
-    // distance: 100,
-    // useExtendedSearch: false,
-    // ignoreLocation: false,
-    // ignoreFieldNorm: false,
-    // fieldNormWeight: 1,
-    keys: [
-      "LIBRARY NAME",
-      "AGEXTERNAL CODE"
-    ]
-  };
-
-
+  
   for(let library of libraries) {
-    console.log(library);
-    let fuse = new Fuse(lenders, fuseOptions);
-    let searchPattern = library;
-    let result = fuse.search(searchPattern)
-    console.log(result);
-    validMatches.push(searchPattern);
+    let [name, score] = search(library, lenders);
+    if( matchScoresHigherThan(score, 88) ) {
+      validMatches.push(lenderDict.find((item) => item.name === name));
+    }
   }
-
   return validMatches;
 }
 
+const search = (library, lenders) =>{
+  let match = extract(library, lenders, {
+    scorer: ratio,
+    limit: 1
+  });
+
+  return match[0];
+}
+
+
+async function searchCombindLenderList(searchableLibraries){
+  let texasLenderList = createLenderCodeDict(TXlenders);
+  let allLenderList = createLenderCodeDict(ALLlenders);
+
+  let txMatches = runNameMatchSearch(normalizeLibraryNames(searchableLibraries), texasLenderList);
+  let allMatches = runNameMatchSearch(normalizeLibraryNames(searchableLibraries), allLenderList);
+
+  return removeDuplicateEntries(txMatches, allMatches)
+}
 
 
