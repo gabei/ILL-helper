@@ -45,6 +45,6 @@ function reportExecuteScriptError(error) {
  * If we couldn't inject the script, handle the error.
  */
 browser.tabs
-  .executeScript({ file: "/content_scripts/lender-search.js" })
+  .executeScript({ file: "/dist/main.js" })
   .then(main)
   .catch(reportExecuteScriptError);

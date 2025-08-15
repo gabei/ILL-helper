@@ -1,4 +1,6 @@
-import initFuzzySearch from '../search/fuzzySearch.js';
+import '../fuse/fuse.js';
+import TXlenders from "./TXlenders.json" with {type: 'json'};
+import ALLlenders from "./ALLlenders.json" with {type: 'json'};
 
 (() => {
   console.log("Hello from the content script!");
@@ -15,9 +17,10 @@ import initFuzzySearch from '../search/fuzzySearch.js';
 }
 
   async function handleMessage(request, sender, sendResponse){
-    console.log(`A content script sent a message: ${request.command}`);
+    console.log("Received message. Searching...");
+
     let libraryNames = await getListOfLibraryNames();
-    let lenderList = await initFuzzySearch(libraryNames);
+    let lenderList = await fuzzySearch(libraryNames, ALLlenders);
     if(lenderList.length === 0) lenderList = [];
     console.log(lenderList)
     return Promise.resolve({ list: lenderList });
@@ -26,5 +29,101 @@ import initFuzzySearch from '../search/fuzzySearch.js';
   browser.runtime.onMessage.addListener(handleMessage);
 
 })();
+
+
+
+
+/*
+* search
+____________________________________*/
+
+function normalizeString(str){
+  return String(str).toLowerCase();
+}
+
+function normalizeLibraryNames(libraries){
+  return libraries.map((name) => {
+    return normalizeString(name);
+  });
+}
+
+function libraryNameList(libraryNames){
+  return libraryNames.map((item) => {
+    return item.name;
+  });
+}
+
+function createLenderCodeDict(lenderCodes){
+  let dict = lenderCodes.map((item) => {
+    return {
+      name: normalizeString(item["LIBRARY NAME"]),
+      code: item["AGEXTERNAL CODE"],
+    };
+  });
+
+  return dict;
+}
+
+function matchScoresHigherThan(match, threshold){
+  return match >= threshold;
+}
+
+
+function removeDuplicateEntries(list1, list2){
+  // Combine both lists and remove duplicates based on the 'code' property
+  // Set ensures uniqueness if a code is added twice
+  let combined = [...list1, ...list2];
+  return Array.from(new Set(combined.map(item => item.code)));
+}
+
+
+// export default async function initFuzzysearch(searchableLibraries){
+//   let texasLenderList = createLenderCodeDict(TXlenders);
+//   let allLenderList = createLenderCodeDict(ALLlenders);
+
+//   let txMatches = runNameMatchSearch(normalizeLibraryNames(searchableLibraries), texasLenderList);
+//   let allMatches = runNameMatchSearch(normalizeLibraryNames(searchableLibraries), allLenderList);
+
+//   return removeDuplicateEntries(txMatches, allMatches)
+// }
+
+
+async function fuzzySearch(libraryNames, lenderDict){
+
+  const validMatches = new Array();
+  const lenders = libraryNameList(lenderDict);
+
+
+  const fuseOptions = {
+    isCaseSensitive: false,
+    // includeScore: false,
+    // ignoreDiacritics: false,
+    // shouldSort: true,
+    // includeMatches: false,
+    // findAllMatches: false,
+    // minMatchCharLength: 1,
+    // location: 0,
+    // threshold: 0.6,
+    // distance: 100,
+    // useExtendedSearch: false,
+    // ignoreLocation: false,
+    // ignoreFieldNorm: false,
+    // fieldNormWeight: 1,
+    keys: [
+      "LIBRARY NAME"
+    ]
+  };
+
+
+  for(let library of libraries) {
+    let fuse = new Fuse(lenders, fuseOptions);
+    let searchPattern = library;
+    console.log(fuse.search(searchPattern))
+    validMatches.push(searchPattern);
+  }
+
+  return validMatches;
+}
+
 
 
