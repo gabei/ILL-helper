@@ -4,6 +4,11 @@
   "manifest_version": 2,
   "name": "ILL-Helper",
   "version": "1.0",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{bd02b78b-67b8-4037-9d8d-cc35dcfae761}"
+    }
+  },
 
   "description": "An extension to collect the list of possible lenders, compare them to what we know is available, and return the list in a copy-able format.",
   "homepage_url": "https://github.com/gabei/ILL-helper",
