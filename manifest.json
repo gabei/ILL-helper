@@ -10,7 +10,7 @@
     }
   },
 
-  "description": "An extension to collect the list of possible lenders, compare them to what we know is available, and return the list in a copy-able format.",
+  "description": "An extension to collect the list of possible lenders from a worldcat page.",
   "homepage_url": "https://github.com/gabei/ILL-helper",
 
   "icons": {
