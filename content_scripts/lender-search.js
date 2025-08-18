@@ -1,5 +1,3 @@
-import { extract, ratio } from 'fuzzball';
-
 (() => {
   console.log("Hello from the content script!");
 
@@ -86,6 +84,10 @@ function runNameMatchSearch(libraries, lenderDict){
 }
 
 function search(library, lenders) {
+  let [extract, ratio] = import("fuzzball").then((fuzzball) => {
+    return [fuzzball.extract, fuzzball.ratio]
+  })
+
   let match = extract(library, lenders, {
     scorer: ratio,
     limit: 1
