@@ -9,7 +9,7 @@
   "homepage_url": "https://github.com/gabei/ILL-helper",
 
   "icons": {
-    "48": "icons/robot.png"
+    "50": "icons/robot.png"
   },
 
   "permissions": ["activeTab", "storage", "scripting"],
@@ -26,4 +26,5 @@
       "js": ["content_scripts/lender-search.js"]
     }
   ]
+
 }

@@ -20,12 +20,13 @@
   },
   "homepage": "https://github.com/gabei/ILL-helper#readme",
   "dependencies": {
-    "fuzzball": "^2.2.3",
-    "web-ext": "^8.9.0"
+    "fuzzball": "^2.2.3"
   },
   "devDependencies": {
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.1",
-    "rollup": "^4.46.2"
+    "jest": "^30.0.5",
+    "rollup": "^4.46.2",
+    "web-ext": "^8.9.0"
   }
 }
