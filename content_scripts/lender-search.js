@@ -1,6 +1,4 @@
 import { extract, ratio } from 'fuzzball';
-import TXlenders from "./TXlenders.json" with {type: 'json'};
-import ALLlenders from "./ALLlenders.json" with {type: 'json'};
 
 (() => {
   console.log("Hello from the content script!");
@@ -75,7 +73,6 @@ function removeDuplicateEntries(list1, list2){
 
 
 function runNameMatchSearch(libraries, lenderDict){
-  console.log("Running name match search...");;
   const validMatches = new Array();
   const lenders = libraryNameList(lenderDict);
   
@@ -99,13 +96,16 @@ function search(library, lenders) {
 
 
 async function searchCombindLenderList(searchableLibraries){
-  let texasLenderList = createLenderCodeDict(TXlenders);
-  let allLenderList = createLenderCodeDict(ALLlenders);
+  let texasLenders = import("./TXlenders.json").then((tx) => {
+    return createLenderCodeDict(tx);
+  })
 
-  let txMatches = runNameMatchSearch(normalizeLibraryNames(searchableLibraries), texasLenderList);
-  let allMatches = runNameMatchSearch(normalizeLibraryNames(searchableLibraries), allLenderList);
+  let allLenders = import("./TXlenders.json").then((all) => {
+    return createLenderCodeDict(all);
+  })
+
+  let txMatches = runNameMatchSearch(normalizeLibraryNames(searchableLibraries), texasLenders);
+  let allMatches = runNameMatchSearch(normalizeLibraryNames(searchableLibraries), allLenders);
 
   return removeDuplicateEntries(txMatches, allMatches)
 }
-
-
