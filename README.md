@@ -1,5 +1,5 @@
 # ILL-helper
-An extension to assit with extending ILL capabilities. A neatly packaged version of the ILL-extended bot.
+An extension to assist with extending ILL capabilities. A neatly packaged version of the ILL-extended bot.
 
 # Setup
 This extension requires usage of ```imports```. Imports are tricky when developing for extensions. We use rollup to bundle everything into a single distributed content script.
