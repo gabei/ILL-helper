@@ -3,9 +3,14 @@
 
   async function getListOfLibraryNames(){
     // This function will return a list of library names from the holdings list
-    let names = document.querySelectorAll('li[data-testid*="library-card"] strong');
-    let nameArray = Array.from(names).map((name) => name.innerText);
-    return nameArray
+    let featuredNames = document.querySelectorAll('li[data-testid*="library-card"] strong');
+    let allNames = document.querySelectorAll('div[data-testid*="library-card"] strong');
+    if(featuredNames.length === 0){
+      return Array.from(allNames).map((name) => name.innerText);
+    } else {
+      return Array.from(featuredNames).map((name) => name.innerText);
+    }
+    
 }
 
   async function handleMessage(request, sender, sendResponse){
